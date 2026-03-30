@@ -43,15 +43,25 @@ async def make_requests(url: str, body: dict):
 
 
 @mcp.tool()
-async def search_jobs(role: str, location: str) -> Dict[str, any] | None:
+async def search_jobs(
+    role: str, location: str, salary: int = None, company_search: bool = False
+) -> Dict[str, any] | None:
     """
     Search for job openings on Jooble with role and location
     Args:
         role: Job role you are looking for
         location: Location for job search
+        salary : The salary required by the user
+        company_search : To search for keywords in the company name or title or job description
+
     """
 
-    body = {"keywords": role, "location": location}
+    body = {
+        "keywords": role,
+        "location": location,
+        "salary": salary,
+        "company_search": company_search,
+    }
 
     response = await make_requests(BASE_URL, body)
 
